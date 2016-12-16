@@ -1,6 +1,5 @@
 package com.github.jnexil.neuvi.api
 
-import com.github.jnexil.neuvi.api.Activation.*
 import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.MemoryProvider.Companion.vector
@@ -60,12 +59,4 @@ fun Vector.shouldHave(vararg values: Double) {
         get(it).should.be.closeTo(values[it], 0.01)
     }
 }
-
-fun Vector.shouldHaveSigmoid(vararg values: Double) {
-    repeat(values.size) {
-        values[it] = Sigmoid.activate(values[it])
-    }
-    return shouldHave(*values)
-}
-
 

@@ -17,6 +17,17 @@ class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
     override var right: MutableWeb? = null
         private set
 
+    override fun detach(direction: Direction): FlexibleLayer? = through(direction) as? FlexibleLayer finally { detached ->
+        when (detached) {
+            null -> debug { "$this - Detach none layer at $direction" }
+            else -> {
+                debug { "$this - Detach $detached at $direction" }
+                setWeb(direction, web = null)
+                detached.detach(direction.reverse)
+            }
+        }
+    }
+
     override fun attach(direction: Direction, layer: FlexibleLayer) = when (layer) {
         this                 -> attachSelf(direction, layer)
         in direction.reverse -> attachReverse(direction, layer)

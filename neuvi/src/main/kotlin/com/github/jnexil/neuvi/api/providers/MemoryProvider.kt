@@ -26,7 +26,15 @@ interface MemoryProvider {
         }
     }
 
-    companion object: MemoryProvider by JMemoryProvider {
+    companion object: MemoryProvider {
+        val provider = when {
+            ND4JMemoryProvider.isEnabled -> ND4JMemoryProvider
+            else                         -> JMemoryProvider
+        }
+
+        override fun matrix(rows: Int, columns: Int): MutableMatrix = provider.matrix(rows, columns)
+        override fun vector(size: Int): MutableVector = provider.vector(size)
+
         fun viewVector(values: DoubleArray) = if (values.isNotEmpty()) object: Vector {
             override val size: Int get() = values.size
             override fun get(index: Int): Double = values[index]

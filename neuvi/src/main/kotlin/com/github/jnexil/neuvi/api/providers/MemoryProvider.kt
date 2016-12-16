@@ -28,7 +28,7 @@ interface MemoryProvider {
 
     companion object: MemoryProvider {
         val provider = when {
-            ND4JMemoryProvider.isEnabled -> ND4JMemoryProvider
+            Nd4jMemoryProvider.isEnabled -> Nd4jMemoryProvider
             else                         -> JMemoryProvider
         }
 

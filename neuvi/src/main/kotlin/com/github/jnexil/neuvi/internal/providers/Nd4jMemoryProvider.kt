@@ -5,7 +5,7 @@ import com.github.jnexil.neuvi.api.providers.*
 import com.github.jnexil.neuvi.internal.nd4j.*
 import org.nd4j.linalg.factory.*
 
-internal object ND4JMemoryProvider: MemoryProvider {
+internal object Nd4jMemoryProvider: MemoryProvider {
     val isEnabled = isSuccess {
         Class.forName("org.nd4j.linalg.factory.Nd4j")
         Nd4j.create(5).cleanup()
@@ -18,6 +18,6 @@ internal object ND4JMemoryProvider: MemoryProvider {
         false
     }
 
-    override fun matrix(rows: Int, columns: Int): MutableMatrix = ND4JMatrix(rows, columns)
-    override fun vector(size: Int): MutableVector = ND4JVector(size)
+    override fun matrix(rows: Int, columns: Int): MutableMatrix = Nd4jMatrix(rows, columns)
+    override fun vector(size: Int): MutableVector = Nd4jVector(size)
 }

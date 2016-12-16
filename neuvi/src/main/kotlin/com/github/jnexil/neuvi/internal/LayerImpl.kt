@@ -63,7 +63,7 @@ class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
         }
     }
 
-    private fun findReverseWeb(layer: FlexibleLayer, direction: Direction): MutableWeb? = layer[direction, this] finally {
+    private fun findReverseWeb(layer: FlexibleLayer, direction: Direction): MutableWeb? = layer[direction.reverse, this] finally {
         debug {
             when (it) {
                 null -> "$this - Cannot find reverse web with $layer"

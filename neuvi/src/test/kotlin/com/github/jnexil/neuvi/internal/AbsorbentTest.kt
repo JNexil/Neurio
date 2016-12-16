@@ -61,5 +61,46 @@ class AbsorbentTest: Spek(spec = {
                 }
             }
         }
+        context("absorb perceptron layers") {
+            on("linear activation") {
+                val ENTER = 0.6
+                val left = linear().entering(ENTER)
+                val right = linear(2)
+                left.attach(RIGHT, right)
+                val w00 = 0.7
+                left.right!![0, 0] = w00
+                val w01 = 0.3
+                left.right!![0, 1] = w01
+
+                it("should calculate values") {
+                    assertTrue("should return true") {
+                        right.absorb()
+                    }
+                    left.values.shouldHave(ENTER)
+                    right.values.shouldHave(ENTER * w00, ENTER * w01)
+                }
+            }
+            on("sigmoid activation") {
+                val ENTER = 0.6
+                val left = sigmoid().entering(ENTER)
+                val right = sigmoid(2)
+                left.attach(RIGHT, right)
+                val w00 = 0.7
+                left.right!![0, 0] = w00
+                val w01 = 0.3
+                left.right!![0, 1] = w01
+
+                it("should calculate values") {
+                    assertTrue("should return true") {
+                        right.absorb()
+                    }
+                    val sigmoidLeft = Sigmoid.activate(ENTER)
+                    val sigmoidRight_0 = Sigmoid.activate(sigmoidLeft * w00)
+                    val sigmoidRight_1 = Sigmoid.activate(sigmoidLeft * w01)
+                    left.values.shouldHave(sigmoidLeft)
+                    right.values.shouldHave(sigmoidRight_0, sigmoidRight_1)
+                }
+            }
+        }
     }
 })

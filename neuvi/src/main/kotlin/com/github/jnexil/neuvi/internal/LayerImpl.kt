@@ -8,8 +8,7 @@ import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.*
 import com.github.jnexil.neuvi.api.webs.*
 import com.github.jnexil.neuvi.util.*
-import su.jfdev.anci.logging.*
-import su.jfdev.anci.util.syntax.*
+import mu.*
 
 class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
     override val values: MutableVector = MemoryProvider.vector(size)
@@ -111,5 +110,5 @@ class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
         }
     }
 
-    private companion object: Logger by Logger[LayerImpl::class]
+    private companion object: KLogger by logger<LayerImpl>()
 }

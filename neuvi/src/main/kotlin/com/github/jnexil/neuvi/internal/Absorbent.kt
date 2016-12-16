@@ -5,11 +5,9 @@ import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.webs.*
 import com.github.jnexil.neuvi.util.*
 import com.github.jnexil.neuvi.util.Cyclic.sum
-import su.jfdev.anci.logging.*
-import su.jfdev.anci.util.syntax.*
 
 internal object Absorbent {
-    private val log = Logger[Absorbent::class]
+    val log = logger<Absorbent>()
     fun absorb(layer: MutableLayer): Boolean {
         log.info { "Absorbing single layer $layer" }
         val web = layer.left

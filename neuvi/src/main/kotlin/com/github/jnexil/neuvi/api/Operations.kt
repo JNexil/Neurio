@@ -5,7 +5,7 @@ import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.*
 import com.github.jnexil.neuvi.internal.*
 import com.github.jnexil.neuvi.util.*
-import su.jfdev.anci.logging.*
+import mu.*
 
 fun MutableLayer.absorb() = Absorbent.absorb(this)
 fun MutableLayer.absorbRecursive() = Absorbent.absorbRecursive(this)
@@ -38,4 +38,4 @@ fun MutableLayer.activate() = values.mutate {
 }
 
 private const val DEF_INPUT = 1.0
-private val logger = Logger["MutableLayerOperations"]
+private val logger = KotlinLogging.logger("MutableLayerOperations")

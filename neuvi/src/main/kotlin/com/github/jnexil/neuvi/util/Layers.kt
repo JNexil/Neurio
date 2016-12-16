@@ -12,7 +12,7 @@ object Layers {
     fun sigmoid(size: Int) = layer(size, Sigmoid)
 
     fun linear() = layer(1, Linear)
-    fun sigmoid() = layer(1, Linear)
+    fun sigmoid() = layer(1, Sigmoid)
 
     fun network(vararg layers: FlexibleLayer): Network {
         require(layers.size < 2) { "Network should contain not less than 2 layes" }

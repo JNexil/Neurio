@@ -1,10 +1,12 @@
 package com.github.jnexil.neuvi.internal
 
 import com.github.jnexil.neuvi.api.*
+import com.github.jnexil.neuvi.api.Activation.*
 import com.github.jnexil.neuvi.api.Direction.*
 import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.util.*
 import com.github.jnexil.neuvi.util.Layers.linear
+import com.github.jnexil.neuvi.util.Layers.sigmoid
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
 import kotlin.test.*
@@ -43,8 +45,8 @@ class AbsorbentTest: Spek(spec = {
                 }
             }
             on("sigmoid activation") {
-                val left = linear().entering(0.5)
-                val right = linear()
+                val left = sigmoid().entering(0.5)
+                val right = sigmoid()
                 left.attach(RIGHT, right)
                 left.right!![0, 0] = 0.4
 
@@ -52,8 +54,10 @@ class AbsorbentTest: Spek(spec = {
                     assertTrue("should return true") {
                         right.absorb()
                     }
-                    left.values.shouldHaveSigmoid(0.5)
-                    right.values.shouldHaveSigmoid(0.5 * 0.4)
+                    val sigmoidLeft = Sigmoid.activate(0.5)
+                    val sigmoidRight = Sigmoid.activate(sigmoidLeft * 0.4)
+                    left.values.shouldHave(sigmoidLeft)
+                    right.values.shouldHave(sigmoidRight)
                 }
             }
         }

@@ -5,8 +5,9 @@ import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.MemoryProvider.Companion.vector
 import com.github.jnexil.neuvi.api.webs.*
-import com.natpryce.hamkrest.*
-import com.natpryce.hamkrest.assertion.*
+import com.github.jnexil.skribe.expect.*
+import com.github.jnexil.skribe.expect.dev.*
+import com.github.jnexil.skribe.expect.extensions.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
 
@@ -54,9 +55,9 @@ class OperationsKtTest: Spek(spec = {
 })
 
 fun Vector.shouldHave(vararg values: Double) {
-    assertThat(message = "Different sizes", actual = size, criteria = equalTo(values.size))
+    size.should.be.equal(values.size)
     repeat(size) {
-        assertThat(message = "Different values", actual = get(it), criteria = equalTo(values[it]))
+        get(it).should.be.closeTo(values[it], 0.01)
     }
 }
 

@@ -12,7 +12,7 @@ interface Network {
     val output: Layer
     val memory: MemoryProvider
 
-    fun process(data: Vector): Vector
+    infix fun process(data: Vector): Vector
 
     object FromIO {
         operator fun get(memoryProvider: MemoryProvider, layer: Layer): Network {

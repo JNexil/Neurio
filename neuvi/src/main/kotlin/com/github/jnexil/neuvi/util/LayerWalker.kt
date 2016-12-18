@@ -8,31 +8,17 @@ import com.github.jnexil.neuvi.api.webs.*
 /**
  * find last layer that linked to receiver through given [direction] or receiver
  * @return receiver if layer's edge
- * @see [findLastWeb]
  */
-fun Layer.findLastLayer(direction: Direction): Layer = findLastWeb(direction)?.get(direction) ?: this
+fun Layer.findLastLayer(direction: Direction): Layer = Cyclic.findLast(this) {
+    it through direction
+}
 
 /**
  * find last layer that linked to receiver through given [direction] or receiver
  * @return receiver if layer's edge
- * @see [findLastWeb]
  */
-fun MutableLayer.findLastLayer(direction: Direction): MutableLayer = findLastWeb(direction)?.get(direction) ?: this
-
-/**
- * find last web that linked to receiver through given [direction]
- * @return null if layer's edge
- */
-fun Layer.findLastWeb(direction: Direction): Web? = Cyclic.findLast {
-    get(direction)
-}
-
-/**
- * find last web that linked to receiver through given [direction]
- * @return null if layer's edge
- */
-fun MutableLayer.findLastWeb(direction: Direction): MutableWeb? = Cyclic.findLast {
-    get(direction)
+fun MutableLayer.findLastLayer(direction: Direction): MutableLayer = Cyclic.findLast(this) {
+    it through direction
 }
 
 /**

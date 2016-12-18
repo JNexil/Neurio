@@ -1,11 +1,14 @@
 package com.github.jnexil.neuvi.api
 
+import com.github.jnexil.neuvi.api.Direction.*
 import com.github.jnexil.neuvi.api.layers.*
-import com.github.jnexil.neuvi.api.linalg.*
+import com.github.jnexil.neuvi.api.linalg.Vector
 import com.github.jnexil.neuvi.api.providers.*
+import com.github.jnexil.neuvi.api.train.*
 import com.github.jnexil.neuvi.internal.*
 import com.github.jnexil.neuvi.util.*
 import mu.*
+import java.util.*
 
 fun MutableLayer.absorb() = Absorbent.absorb(this)
 fun MutableLayer.absorbRecursive() = Absorbent.absorbRecursive(this)
@@ -39,3 +42,12 @@ fun MutableLayer.activate() = values.mutate {
 
 private const val DEF_INPUT = 1.0
 private val logger = KotlinLogging.logger("MutableLayerOperations")
+
+fun MutableLayer.backPropagation(learningRate: Double, momentum: Double): Propagation = BackPropagation(
+        output = this,
+        learningRate = learningRate,
+        sender = LEFT,
+        default = 1.0,
+        memory = MemoryProvider,
+        momentum = momentum,
+        experience = HashMap())

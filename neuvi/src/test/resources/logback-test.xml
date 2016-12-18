@@ -8,4 +8,5 @@
         <appender-ref ref="STDOUT"/>
     </root>
     <logger name="com.github.jnexil.neuvi" level="ALL"/>
+    <logger name="com.github.jnexil.skribe" level="INFO"/>
 </configuration>

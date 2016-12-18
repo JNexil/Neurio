@@ -1,0 +1,30 @@
+apply plugin: "io.spring.dependency-management"
+dependencyManagement {
+    dependencies {
+        dependencySet(group: "com.github.jnexil.skribe", version: "0.3.5"){
+            entry "skribe"
+            entry "patronus"
+        }
+        dependencySet(group: "org.jetbrains.kotlin", version: kotlin_version){
+            entry "kotlin-stdlib"
+            entry "kotlin-test"
+        }
+        dependencySet(group: "su.jfdev.anci", version: "0.2.0"){
+            entry "logging-main"
+            entry "logging-slf4j"
+        }
+        dependencySet(group: "su.jfdev.anci", version: "0.2.0-r3"){
+            entry "service-api"
+            entry "service-impl"
+        }
+        dependencySet(group: "org.jetbrains.spek", version: "1.0.89"){
+            entry "spek-api"
+            entry "spek-junit-platform-engine"
+        }
+        dependency 'org.jetbrains.kotlinx:kotlinx-support-jdk8:0.3'
+        dependency "su.jfdev.sheaf:sheaf-kt:0.1.0"
+        dependency "org.junit.platform:junit-platform-runner:$junit_version"
+        dependency group: 'com.natpryce', name: 'hamkrest', version: '1.2.3.0'
+        dependency group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    }
+}

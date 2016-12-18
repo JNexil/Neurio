@@ -1,0 +1,60 @@
+buildscript {
+    ext.kotlin_version = '1.0.5-2'
+    ext.junit_version = '1.0.0-M2'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junit_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
+    }
+}
+
+subprojects {
+    group 'com.github.jnexil.neuvi'
+    version '0.1.0'
+
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+    apply plugin: 'org.junit.platform.gradle.plugin'
+
+
+    repositories {
+        jcenter()
+        maven {
+            url "http://dl.bintray.com/anci/maven"
+        }
+        maven {
+            url "https://dl.bintray.com/jnexil/maven"
+        }
+    }
+
+    junitPlatform {
+        engines {
+            include 'spek'
+        }
+    }
+
+    apply from: '../gradle/dependencies.gradle'
+
+    dependencies {
+        compile 'org.jetbrains.kotlinx:kotlinx-support-jdk8'
+        compile 'io.github.microutils:kotlin-logging:1.4.1'
+        compile "org.jetbrains.kotlin:kotlin-stdlib"
+        testCompile 'com.natpryce:hamkrest'
+        testCompile 'org.jetbrains.spek:spek-api'
+        testCompile 'org.jetbrains.spek:spek-junit-platform-engine'
+        testCompile "org.jetbrains.kotlin:kotlin-test"
+        testCompile "org.junit.platform:junit-platform-runner"
+        testCompile "com.github.jnexil.skribe:skribe"
+        testCompile "com.github.jnexil.skribe:patronus"
+        testRuntime group: 'ch.qos.logback', name: 'logback-classic'
+    }
+}
+
+project(":neuvi"){
+    apply from: '../gradle/nd4j.gradle'
+}

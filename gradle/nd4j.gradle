@@ -1,0 +1,7 @@
+ext.nd4j_version = '0.4.0'
+dependencies {
+    compileOnly "org.nd4j:nd4j-native-platform:${nd4j_version}"
+    compileOnly "org.nd4j:nd4j-native:${nd4j_version}"
+    compileOnly "org.nd4j:nd4j-native:${nd4j_version}:windows-x86_64-openblas"
+    compileOnly "org.nd4j:nd4j-native:${nd4j_version}:windows-x86_64"
+}

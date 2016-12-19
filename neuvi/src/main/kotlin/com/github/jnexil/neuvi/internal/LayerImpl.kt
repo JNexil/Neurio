@@ -7,10 +7,11 @@ import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.*
 import com.github.jnexil.neuvi.api.webs.*
+import com.github.jnexil.neuvi.internal.providers.*
 import com.github.jnexil.neuvi.util.*
 import mu.*
 
-class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
+internal class LayerImpl(size: Int, override val activation: Activation, val provider: LayerProviderImpl): FlexibleLayer {
     override val values: MutableVector = MemoryProvider.vector(size)
     override var left: MutableWeb? = null
         private set
@@ -85,7 +86,7 @@ class LayerImpl(size: Int, override val activation: Activation): FlexibleLayer {
     private fun newWeb(layer: FlexibleLayer, direction: Direction): MutableWeb = when (direction) {
         LEFT  -> {
             debug { "Creating web $layer-$this" }
-            WebImpl(layer, this)
+            provider.web(layer, this)
         }
         RIGHT -> {
             debug { "Creating web $this-$layer" }

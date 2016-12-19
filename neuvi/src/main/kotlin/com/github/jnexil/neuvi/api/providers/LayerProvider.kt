@@ -7,7 +7,7 @@ import com.github.jnexil.neuvi.internal.providers.*
 
 interface LayerProvider {
     fun layer(size: Int, activation: Activation = Sigmoid): FlexibleLayer
-    fun with(memoryManagement: MemoryManagement): LayerProvider
+    fun with(memory: MemoryManagement = MemoryManagement.Global, initializer: Initializer = Initializer.Random): LayerProvider
 
     companion object: LayerProvider by LayerProviderImpl(MemoryManagement.Global)
 }

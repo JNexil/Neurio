@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":neuvi")
+    compile "org.knowm.xchart:xchart"
+}

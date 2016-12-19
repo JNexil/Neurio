@@ -1,7 +1,6 @@
-ext.nd4j_version = '0.4.0'
 dependencies {
-    compileOnly "org.nd4j:nd4j-native-platform:${nd4j_version}"
-    compileOnly "org.nd4j:nd4j-native:${nd4j_version}"
-    compileOnly "org.nd4j:nd4j-native:${nd4j_version}:windows-x86_64-openblas"
-    compileOnly "org.nd4j:nd4j-native:${nd4j_version}:windows-x86_64"
+    compileOnly "org.nd4j:nd4j-native-platform"
+    compileOnly group: "org.nd4j", name: "nd4j-native"
+    compileOnly group: "org.nd4j", name: "nd4j-native", classifier: "windows-x86_64-openblas"
+    compileOnly group: "org.nd4j", name: "nd4j-native", classifier: "windows-x86_64"
 }

@@ -1,2 +1,2 @@
 rootProject.name = 'Neurio'
-include 'neuvi'
+include 'neuvi', "charts"

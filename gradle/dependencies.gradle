@@ -1,6 +1,7 @@
 apply plugin: "io.spring.dependency-management"
 dependencyManagement {
     dependencies {
+        ext.nd4j_version = '0.4.0'
         dependencySet(group: "com.github.jnexil.skribe", version: "0.3.5"){
             entry "skribe"
             entry "patronus"
@@ -21,10 +22,13 @@ dependencyManagement {
             entry "spek-api"
             entry "spek-junit-platform-engine"
         }
+        dependency 'org.knowm.xchart:xchart:3.2.2'
         dependency 'org.jetbrains.kotlinx:kotlinx-support-jdk8:0.3'
         dependency "su.jfdev.sheaf:sheaf-kt:0.1.0"
         dependency "org.junit.platform:junit-platform-runner:$junit_version"
         dependency group: 'com.natpryce', name: 'hamkrest', version: '1.2.3.0'
         dependency group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+        dependency "org.nd4j:nd4j-native-platform:${nd4j_version}"
+        dependency "org.nd4j:nd4j-native:${nd4j_version}"
     }
 }

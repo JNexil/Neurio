@@ -10,9 +10,11 @@ import com.github.jnexil.neuvi.api.providers.LayerProvider.Companion.layer
 object Layers {
     fun linear(size: Int) = layer(size, Linear)
     fun sigmoid(size: Int) = layer(size, Sigmoid)
+    fun tanh(size: Int) = layer(size, Tanh)
 
     fun linear() = layer(1, Linear)
     fun sigmoid() = layer(1, Sigmoid)
+    fun tanh() = layer(1, Tanh)
 
     fun network(vararg layers: FlexibleLayer): Network {
         require(layers.size > 1) { "Network should contain not less than 2 layers" }

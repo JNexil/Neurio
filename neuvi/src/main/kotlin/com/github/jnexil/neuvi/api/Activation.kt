@@ -20,4 +20,11 @@ interface Activation {
 
         override fun toString(): String = "Activation.Sigmoid"
     }
+
+    object Tanh: Activation {
+        override fun activate(value: Double): Double = Math.tanh(value)
+        override fun derivative(value: Double): Double = 1 - value * value
+
+        override fun toString(): String = "Activation.Tanh"
+    }
 }

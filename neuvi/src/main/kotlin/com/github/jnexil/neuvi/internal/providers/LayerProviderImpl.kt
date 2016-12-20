@@ -15,7 +15,7 @@ internal class LayerProviderImpl(private val memoryManagement: MemoryManagement 
     }
 
     override fun layer(size: Int, activation: Activation) = LayerImpl(size, activation, this)
-    fun web(left: FlexibleLayer, right: LayerImpl): WebImpl = WebImpl(left, right) finally {
+    fun web(left: FlexibleLayer, right: FlexibleLayer): WebImpl = WebImpl(left, right) finally {
         repeat(it.rows) { row ->
             repeat(it.columns) { column ->
                 it[row, column] = initializer.weight(row, column)

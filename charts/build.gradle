@@ -1,4 +1,5 @@
 dependencies {
     compile project(":neuvi")
     compile "org.knowm.xchart:xchart"
+    runtime group: 'ch.qos.logback', name: 'logback-classic'
 }

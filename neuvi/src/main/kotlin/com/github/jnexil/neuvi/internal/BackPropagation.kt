@@ -76,9 +76,11 @@ class BackPropagation(
             val delta = receiverDelta[receiver]
             repeat(rows) { sender ->
                 val experience = training.momentum * webExperience[sender, receiver]
-                val progress = delta * left.values[sender] * training.learningRate
+                val change = delta * left.values[sender]
+                val progress = change * training.learningRate
                 logger.debug { "Trained experience=$experience, progress=$progress[delta=$delta]" }
                 this[sender, receiver] = experience + progress
+                webExperience[sender, receiver] = experience + progress
             }
         }
     }

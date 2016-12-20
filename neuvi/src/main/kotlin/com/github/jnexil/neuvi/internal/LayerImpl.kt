@@ -90,7 +90,7 @@ internal class LayerImpl(size: Int, override val activation: Activation, val pro
         }
         RIGHT -> {
             debug { "Creating web $this-$layer" }
-            WebImpl(this, layer)
+            provider.web(this, layer)
         }
     } finally {
         info { "Created web $it" }

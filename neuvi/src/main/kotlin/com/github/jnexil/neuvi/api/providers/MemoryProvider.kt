@@ -38,6 +38,7 @@ interface MemoryProvider {
         fun viewVector(values: DoubleArray) = if (values.isNotEmpty()) object: Vector {
             override val size: Int get() = values.size
             override fun get(index: Int): Double = values[index]
+            override fun toString(): String = values.joinToString(prefix = "[", postfix = "]")
         } else EMPTY_VECTOR
 
         val EMPTY_MATRIX = object: MutableMatrix {

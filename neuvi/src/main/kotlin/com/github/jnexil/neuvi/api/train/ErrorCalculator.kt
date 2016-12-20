@@ -15,7 +15,7 @@ enum class ErrorCalculator {
     },
     ROOT_MSE {
         override fun calculate(actual: Vector, expected: Vector): Double {
-            return Math.sqrt(ROOT_MSE.calculate(actual, expected))
+            return Math.sqrt(MSE.calculate(actual, expected))
         }
     };
 

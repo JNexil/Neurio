@@ -13,6 +13,7 @@ import com.github.jnexil.skribe.expect.*
 import com.github.jnexil.skribe.expect.dev.*
 import com.github.jnexil.skribe.expect.extensions.*
 import com.github.jnexil.skribe.util.*
+import mu.*
 
 class BackPropagationTest: Skribe("Training with back propagation") {
     fun vec(vararg values: Double): Vector = MemoryProvider.viewVector(values)
@@ -26,32 +27,39 @@ class BackPropagationTest: Skribe("Training with back propagation") {
                         template.initTo(output)
                     }
                     stepR("absorb data") {
-                        FromMutable[MemoryProvider, input, output] process vec(template.I0, template.I1)
+                        FromMutable[MemoryProvider, input, output] process template.input
                     }
                     stepR("train data") {
                         propagation train vec(target)
                     }
+                    step {
+                        logger.info { "${it.trained}" }
+                    }
 
                     share("should update web's weights") {
-                        fun Expect<Double>.nearest(value: Double) = closeTo(value, delta = 0.00001)
+                        fun Image.shouldBe(web: Int, sender: Int, receiver: Int) {
+                            webs[web][sender, receiver]
+                                    .should
+                                    .be
+                                    .closeTo(trained.webs[web][sender, receiver], delta = 0.000000)
+                        }
                         testR("between first hidden and output neurons") {
-                            webs[1][0, 0].should.be.nearest(trained.H0_O)
+                            shouldBe(web = 1, sender = 0, receiver = 0)
                         }
                         testR("between second hidden and output neurons") {
-                            webs[1][1, 0].should.be.nearest(trained.H1_O)
+                            shouldBe(web = 1, sender = 1, receiver = 0)
                         }
-
                         testR("between first input and first hidden neurons") {
-                            webs[0][0, 0].should.be.nearest(trained.I0_H0)
+                            shouldBe(web = 0, sender = 0, receiver = 0)
                         }
                         testR("between second input and first hidden neurons") {
-                            webs[0][1, 0].should.be.nearest(trained.I1_H0)
+                            shouldBe(web = 0, sender = 1, receiver = 0)
                         }
                         testR("between first input and second hidden neurons") {
-                            webs[0][0, 1].should.be.nearest(trained.I0_H1)
+                            shouldBe(web = 0, sender = 0, receiver = 1)
                         }
                         testR("between second input and second hidden neurons") {
-                            webs[0][1, 1].should.be.nearest(trained.I1_H1)
+                            shouldBe(web = 0, sender = 1, receiver = 1)
                         }
                     }
                 }
@@ -68,14 +76,15 @@ class BackPropagationTest: Skribe("Training with back propagation") {
         }
 
         val webs = arrayOf(input.right!!, hidden.right!!)
-        val propagation = output.backPropagation(learningRate = 0.1, momentum = .0)
+        val propagation = output.backPropagation()
 
-        val template = PerceptronTestModel(0.3, 0.7)
-        val absorbed = template.absorb(activation)
-        val trained = absorbed.train(activation, 0.1, target = template.O)
+        val template = Model(activation)
+        val trained = TrainedModel(template, training = propagation.training)
 
-        val target: Double get() = template.O
+        val target: Double get() = template.expected
     }
+
+    companion object: KLogging()
 }
 
 

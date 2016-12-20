@@ -1,6 +1,5 @@
 package com.github.jnexil.neuvi.api
 
-import com.github.jnexil.neuvi.api.Direction.*
 import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.linalg.Vector
 import com.github.jnexil.neuvi.api.providers.*
@@ -43,11 +42,9 @@ fun MutableLayer.activate() = values.mutate {
 private const val DEF_INPUT = 1.0
 private val logger = KotlinLogging.logger("MutableLayerOperations")
 
-fun MutableLayer.backPropagation(learningRate: Double, momentum: Double): Propagation = BackPropagation(
+infix fun MutableLayer.backPropagation(training: Training): Propagation = BackPropagation(
         output = this,
-        learningRate = learningRate,
-        sender = LEFT,
-        default = 1.0,
-        memory = MemoryProvider,
-        momentum = momentum,
+        training = training,
         experience = HashMap())
+
+fun MutableLayer.backPropagation(): Propagation = backPropagation(Training.DEFAULT)

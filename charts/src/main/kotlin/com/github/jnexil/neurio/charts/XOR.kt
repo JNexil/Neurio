@@ -20,9 +20,9 @@ object XOR {
 
         val outLayer = tanh(1)
         val network = network(tanh(3), tanh(2), outLayer)
-        val propagation = outLayer.backPropagation(learningRate = 0.4, momentum = .0)
+        val propagation = outLayer.backPropagation()
 
-        repeat(Int.MAX_VALUE) { epoch ->
+        repeat(1000) { epoch ->
             for (set in trainSets) {
                 network.process(set.input)
                 val error = MSE.withTrain(propagation, set.output)
@@ -34,4 +34,40 @@ object XOR {
 
     fun vec(vararg doubles: Double) = viewVector(doubles)
 }
+
+object ODD {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val trainSets = arrayOf(TrainSet(vec(0, 0, 0, 0), vec(0)),
+                                TrainSet(vec(0, 0, 0, 1), vec(1)),
+                                TrainSet(vec(0, 0, 1, 0), vec(0)),
+                                TrainSet(vec(0, 1, 1, 0), vec(0)),
+                                TrainSet(vec(0, 1, 1, 1), vec(1)),
+                                TrainSet(vec(1, 0, 1, 0), vec(0)),
+                                TrainSet(vec(1, 0, 1, 1), vec(1)),
+                                TrainSet(vec(1, 1, 0, 0), vec(0)),
+                                TrainSet(vec(1, 1, 0, 1), vec(1)),
+                                TrainSet(vec(1, 1, 1, 0), vec(0)),
+                                TrainSet(vec(1, 1, 1, 1), vec(1)))
+
+        val chart = xyChart(title = "Network").gui()
+
+        val outLayer = tanh(1)
+        val network = network(tanh(4), tanh(2), outLayer)
+        val propagation = outLayer.backPropagation()
+
+        repeat(1000) { epoch ->
+            for (set in trainSets) {
+                network.process(set.input)
+                val error = MSE.withTrain(propagation, set.output)
+
+                println("error = ${error}")
+                chart.update(set, epoch, error)
+            }
+        }
+    }
+
+    fun vec(vararg ints: Int) = viewVector(ints.map(Int::toDouble).toDoubleArray())
+}
+
 

@@ -6,8 +6,7 @@ import com.github.jnexil.neuvi.api.linalg.*
 import java.io.*
 
 interface Propagation: Serializable {
-    val learningRate: Double
     val output: MutableLayer
-    val sender: Direction
+    val training: Training
     infix fun train(expected: Vector)
 }

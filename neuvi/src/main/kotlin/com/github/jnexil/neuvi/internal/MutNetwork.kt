@@ -7,9 +7,14 @@ import com.github.jnexil.neuvi.api.networks.*
 import com.github.jnexil.neuvi.api.providers.*
 
 internal class MutNetwork internal constructor(override val input: MutableLayer, override val output: MutableLayer, override val memory: MemoryProvider): Network {
+    val propagation = output.backPropagation()
     override fun process(data: Vector): Vector {
         input.enter(data)
         output.absorbRecursive()
         return memory.copyVector(output.values)
+    }
+
+    override fun train(expected: Vector) {
+        propagation.train(expected)
     }
 }

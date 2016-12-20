@@ -11,4 +11,8 @@ internal class IONetwork internal constructor(override val input: InputLayer, ov
         output.absorb()
         return memory.copyVector(output.values)
     }
+
+    override fun train(expected: Vector) {
+        throw UnsupportedOperationException("Cannot train network with immutable structure")
+    }
 }

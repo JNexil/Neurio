@@ -4,6 +4,7 @@ import com.github.jnexil.neuvi.api.Direction.*
 import com.github.jnexil.neuvi.api.layers.*
 import com.github.jnexil.neuvi.api.linalg.*
 import com.github.jnexil.neuvi.api.providers.*
+import com.github.jnexil.neuvi.api.train.*
 import com.github.jnexil.neuvi.internal.*
 import com.github.jnexil.neuvi.util.*
 
@@ -13,6 +14,8 @@ interface Network {
     val memory: MemoryProvider
 
     infix fun process(data: Vector): Vector
+    fun train(expected: Vector)
+    fun error(error: ErrorCalculator, expected: Vector): Double = error.calculate(output.values, expected)
 
     object FromIO {
         operator fun get(memoryProvider: MemoryProvider, layer: Layer): Network {
